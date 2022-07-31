@@ -44,23 +44,15 @@ router.get('/register', (req, res) => {
 
 // show homepage
 router.get('/home', middleware.isLoggedIn, (req, res) => {
-  Request.find({ author: req.user.username }, (err, allrequests) => {
+  Request.find({}, (err, allrequests) => {
     if (err) {
       console.log('Error in find');
       console.log(err);
     } else {
-      // counts = Request.find({ author: req.user.username }).count();
       res.render('index', {
         requests: allrequests.reverse(),
-        currentUser: req.user,
-        // totalcount: counts,
+        totalcount: allrequests.length,
       });
-
-      // console.log('Total Docs : ' + counts);
-      // console.log('author type' + allrequests.author);
-      // console.log('Hey');
-      // console.log('UserName ' + req.user.username);
-      // console.log(typeof req.user.username);
     }
   });
   // AppUser.find({ username: req.user.username }, (err, data) => {
@@ -109,53 +101,45 @@ router.get('/request-detail', middleware.isLoggedIn, (req, res) => {
 });
 
 // show request page
-router.get('/request', middleware.isLoggedIn, (req, res) => {
+router.get('/acceptrequest', middleware.isLoggedIn, (req, res) => {
   res.render('scanqr');
 });
 
 // handle request logic
-router.post('/sendrequest', middleware.isLoggedIn, (req, res) => {
-  var pname = req.body.pname;
-  var size = req.body.size;
-  var height = req.body.height;
-  var width = req.body.width;
-  var weight = req.body.weight;
-  var author = req.user.username;
-  var address = req.user.address;
-  var mobile = req.user.mobile;
-
-  // var author = {
-  //   id: req.user._id,
-  //   username: req.user.username,
-  //   email: req.user.email,
-  // };
-
-  var newRequest = {
-    address: address,
-    author: author,
-    mobile: mobile,
-    pname: pname,
-    size: size,
-    height: height,
-    width: width,
-    weight: weight,
-  };
+router.post('/acceptrequest', middleware.isLoggedIn, (req, res) => {
+  // var pname = req.body.pname;
+  // var size = req.body.size;
+  // var height = req.body.height;
+  // var width = req.body.width;
+  // var weight = req.body.weight;
+  // var author = req.user.username;
+  // var address = req.user.address;
+  // var mobile = req.user.mobile;
 
   console.log(req.body);
   console.log(req.user);
   console.log('USERNAME : ' + req.user.username);
 
-  //Save to database
-  Request.create(newRequest, (err, newlyCreated) => {
+  Request.find({ pname: req.body.pname }, (err, allrequests) => {
     if (err) {
-      console.log('Error in inserting into DB');
-      res.render('scanqr', {
-        message: 'Failed To Request',
-      });
+      console.log('Error in find');
+      console.log(err);
     } else {
-      res.render('scanqr', {
-        message: 'Request Successfull',
+      res.render('index', {
+        requests: allrequests.reverse(),
       });
+      console.log(allrequests[0]);
+      if (
+        allrequests[0].pname == req.body.pname &&
+        allrequests[0].size == req.body.size &&
+        allrequests[0].height == req.body.height &&
+        allrequests[0].width == req.body.width &&
+        allrequests[0].weight == req.body.weight
+      ) {
+        console.log('Request Matched');
+      } else {
+        console.log('Request Not Matched');
+      }
     }
   });
 });
@@ -169,19 +153,7 @@ router.post(
     successRedirect: '/home',
     failureRedirect: '/',
   }),
-  (req, res) => {
-    AppUser.find({ username: req.user.username }, (err, data) => {
-      if (err) {
-        console.log('Error in find');
-        console.log(err);
-      } else {
-        res.render('index', {
-          profileimg: data.username,
-        });
-        console.log(data);
-      }
-    });
-  }
+  (req, res) => {}
 );
 
 // habdle signup logic
@@ -210,7 +182,7 @@ router.post('/register', upload, (req, res) => {
     passport.authenticate('local')(req, res, () => {
       res.render('index', {
         currentUser: req.user,
-        profileimg: req.file.filename,
+        // profileimg: req.file.filename,
       });
     });
   });

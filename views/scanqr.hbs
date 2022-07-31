@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>Saaf India</title>
+    <meta name="description" content="Finapp HTML Mobile Template">
+    <meta name="keywords" content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+    <link rel="icon" type="image/png" href="public/img/favicon.png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="public/img/icon/192x192.png">
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="manifest" href="__manifest.json">
+</head>
+
+<body>
+
+    <!-- loader -->
+    <div id="loader">
+        <img src="public/img/loading-icon.png" alt="icon" class="loading-icon">
+    </div>
+    <!-- * loader -->
+
+    <!-- App Header -->
+    <div class="appHeader">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <img src="https://icones.pro/wp-content/uploads/2021/06/symbole-fleche-gauche-violet.png" alt="" width="32" height="32">
+                {{!-- <ion-icon name="chevron-back-outline"></ion-icon> --}}
+            </a>
+        </div>
+        <div class="pageTitle">
+            Scan
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+
+        <div class="section mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="p-1">
+                        <div class="text-center">
+                            <h2 class="text-primary">Scan The Product QR</h2>
+                            <p>Scan The Product QR To Get Data</p>
+                        </div>
+                        <form>
+
+                            <div class="col">
+                                <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+                                <div class="col-sm-12">
+                                    <video id="preview" class="p-1 border" style="width:100%;"></video>
+                                </div>
+                                <script type="text/javascript">
+                                function startscan() {
+                                    var video = document.getElementById('preview');
+                                    video.style.display = 'inline';
+
+                                    var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+
+                                    scanner.addListener('scan', function (content) {
+                                        var productData = JSON.parse(content);
+                                        console.log(productData);
+                                        
+                                        document.getElementById("pname").style.display = 'none';
+                                        document.getElementById("size").style.display = 'none';
+                                        document.getElementById("height").style.display = 'none';
+                                        document.getElementById("width").style.display = 'none';
+                                        document.getElementById("weight").style.display = 'none';
+
+                                        console.log('Field hidden')
+
+                                        document.getElementById("msg").value = "Data Captured Successfully"
+
+                                        var pname = productData.pname;
+                                        var size = productData.size;
+                                        var height = productData.height;
+                                        var width = productData.width;
+                                        var weight = productData.weight;
+
+                                        console.log(pname, size, height, width, weight);
+
+                                        document.getElementById("pname").value = pname
+                                        document.getElementById("size").value = size
+                                        document.getElementById("height").value = height
+                                        document.getElementById("width").value = width
+                                        document.getElementById("weight").value = weight
+
+                                        console.log('Values Set !')
+
+
+                                        
+                                        
+
+                                        //window.location.href=content;
+                                    });
+                                    Instascan.Camera.getCameras().then(function (cameras) {
+                                        if (cameras.length > 0) {
+                                            scanner.start(cameras[1]);
+                                        } else {
+                                            console.error('No cameras found.');
+                                            alert('No cameras found.');
+                                        }
+                                    }).catch(function (e) {
+                                        console.error(e);
+                                        alert(e);
+                                    });
+                                }
+
+                                function stopscan() {
+                                    var video = document.getElementById('preview');
+                                    //video.style.display = 'none';
+                                    var stream = video.srcObject;
+                                    var tracks = stream.getTracks();
+
+                                    //tracks.forEach(function(track) {
+                                    //    track.stop();
+                                    //});
+
+                                    tracks[0].stop();
+
+                                    video.srcObject = null;
+                                    }
+                                </script>
+                            </div>
+
+                            <div class="mt-2">
+                                <div class="row">
+                                    <div class="col">
+                                         <button type="button" class="btn btn-primary btn btn-block" onclick="startscan()">Scan</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-primary btn btn-block" onclick="stopscan()">Stop</button>
+                                    </div>      
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="p-1">
+                        <div class="text-center">
+                            <h2 class="text-primary">Accept The Request</h2>
+                            <p>Accept Pickup Request For Following Product</p>
+                            {{#if message}}
+                            <p class="alert alert-danger">
+                                {{message}}
+                            </p>
+                            <a href="/home" class="btn btn-secondary mt-2">Go To Home</a>
+                            {{/if}}
+                        </div>
+                        <form action="/acceptrequest" method="post">
+                             <div class="form-group basic animated">
+                                <div class="input-wrapper">
+                                    <label class="label" for="msg">  </label>
+                                    <input type="text" class="form-control" id="msg" placeholder="" name="msg">
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="form-group basic animated" style="display: none;">
+                                <div class="input-wrapper">
+                                    <label class="label" for="pname">product name</label>
+                                    <input type="text" class="form-control" id="pname" placeholder="Product name" name="pname" required>
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="form-group basic animated" style="display: none;">
+                                <div class="input-wrapper">
+                                    <label class="label" for="size">Size</label>
+                                    <input type="text" class="form-control" id="size" placeholder="Size" name="size" required>
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="form-group basic animated" style="display: none;">
+                                <div class="input-wrapper">
+                                    <label class="label" for="height">Height</label>
+                                    <input type="text" class="form-control" id="height" placeholder="Height" name="height" required>
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="form-group basic animated" style="display: none;">
+                                <div class="input-wrapper">
+                                    <label class="label" for="width">width</label>
+                                    <input type="text" class="form-control" id="width" placeholder="Width" name="width" required>
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="form-group basic animated" style="display: none;">
+                                <div class="input-wrapper">
+                                    <label class="label" for="textarea2">Weight</label>
+                                    <input type="text" class="form-control" id="weight" placeholder="Weight" name="weight" required>
+                                    <i class="clear-input">
+                                        <ion-icon name="close-circle"></ion-icon>
+                                    </i>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <input type="submit" value="Accept" class="btn btn-primary btn-lg btn-block">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- * App Capsule -->
+
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="/home" class="item active">
+            <div class="col">
+                <ion-icon name="pie-chart-outline"></ion-icon>
+                <strong>Overview</strong>
+            </div>
+        </a>
+        <a href="/settings" class="item">
+            <div class="col">
+                <ion-icon name="settings-outline"></ion-icon>
+                <strong>Settings</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="public/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Splide -->
+    <script src="public/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="public/js/base.js"></script>
+
+
+</body>
+
+</html>

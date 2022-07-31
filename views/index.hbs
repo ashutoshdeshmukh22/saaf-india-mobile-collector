@@ -60,12 +60,12 @@
                 <!-- Balance -->
                 <div class="balance">
                     <div class="left">
-                        <span class="title">My Rewards Points</span>
-                        <h1 class="total">😎 1355 pts</h1>
+                        <span class="title">Total Pickups</span>
+                        <h1 class="total">🗳️ 174</h1>
                     </div>
                     <div class="right">
                         <a href="#" class="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
-                            <ion-icon name="add-outline"></ion-icon>
+                            <ion-icon name="arrow-down-outline"></ion-icon>
                         </a>
                     </div>
                 </div>
@@ -75,25 +75,17 @@
                     <div class="item">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#withdrawActionSheet">
                             <div class="icon-wrapper bg-danger">
-                                <ion-icon name="arrow-down-outline"></ion-icon>
+                                <ion-icon name="search-outline"></ion-icon>
                             </div>
-                            <strong>Withdraw Req</strong>
+                            <strong>Track Req</strong>
                         </a>
                     </div>
                     <div class="item">
-                        <a href="/request">
-                            <div class="icon-wrapper">
-                                <ion-icon name="arrow-forward-outline"></ion-icon>
+                        <a href="/acceptrequest">
+                            <div class="icon-wrapper bg-success">
+                                <ion-icon name="camera-outline"></ion-icon>
                             </div>
-                            <strong>Send Req.</strong>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#exchangeActionSheet">
-                            <div class="icon-wrapper bg-warning">
-                                <ion-icon name="swap-vertical"></ion-icon>
-                            </div>
-                            <strong>Exchange Points</strong>
+                            <strong>Accept</strong>
                         </a>
                     </div>
 
@@ -112,33 +104,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="action-sheet-content">
-                            <form>
-                                <div class="form-group basic">
-                                    <div class="input-wrapper">
-                                        <label class="label" for="account1">From</label>
-                                        <select class="form-control custom-select" id="account1">
-                                            <option value="0">Savings (*** 5019)</option>
-                                            <option value="1">Investment (*** 6212)</option>
-                                            <option value="2">Mortgage (*** 5021)</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group basic">
-                                    <label class="label">Enter Amount</label>
-                                    <div class="input-group mb-2">
-                                        <span class="input-group-text" id="basic-addona1">$</span>
-                                        <input type="text" class="form-control" placeholder="Enter an amount"
-                                            value="100">
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group basic">
-                                    <button type="button" class="btn btn-primary btn-block btn-lg"
-                                        data-bs-dismiss="modal">Deposit</button>
-                                </div>
-                            </form>
+                           
                         </div>
                     </div>
                 </div>
@@ -178,73 +144,6 @@
         </div>
         <!-- * Withdraw Action Sheet -->
 
-        <!-- Send Action Sheet -->
-        <div class="modal fade action-sheet" id="sendActionSheet" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Send Pickup Request</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="action-sheet-content">
-                            <form action="" method="">
-                                {{!-- <div class="form-group basic">
-                                    <div class="input-wrapper">
-                                        <label class="label" for="account2">From</label>
-                                        <select class="form-control custom-select" id="account2">
-                                            <option value="0">Savings (*** 5019)</option>
-                                            <option value="1">Investment (*** 6212)</option>
-                                            <option value="2">Mortgage (*** 5021)</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-
-                                <div class="form-group basic">
-                                    <div class="input-wrapper">
-                                        <label class="label" for="text11">Product Name</label>
-                                        <input type="text" class="form-control" id="text11"
-                                            placeholder="Enter Product Name">
-                                        <i class="clear-input">
-                                            <ion-icon name="close-circle"></ion-icon>
-                                        </i>
-                                    </div>
-                                </div>
-
-                                <div class="form-group basic">
-                                    <label class="label">Scan The QR Code To Get Details</label>
-                                    <div class="input-group mb-2 mt-2">
-                                        <a href="/scan" class="btn btn-primary">Scan</a>
-                                    </div>
-                                </div>
-
-                                <div class="form-group basic">
-                                    <button type="button" class="btn btn-primary btn-block btn-lg"
-                                        data-bs-dismiss="modal">Send</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- * Send Action Sheet -->
-
-        <!-- Exchange Action Sheet -->
-        <div class="modal fade action-sheet" id="exchangeActionSheet" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Exchange Points</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="action-sheet-content">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- * Exchange Action Sheet -->
 
         <!-- Stats -->
         <div class="section">
@@ -252,29 +151,13 @@
                 <div class="col-6">
                     <div class="stat-box">
                         <div class="title">Requests today</div>
-                        <div class="value text-success">0</div>
+                        <div class="value text-success">{{totalcount}}</div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="stat-box">
                         <div class="title">Pending</div>
                         <div class="value text-danger">0</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-6">
-                    <div class="stat-box">
-                        <div class="title">Accepted</div>
-                        <div class="value">2</div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="stat-box">
-                        <div class="title">Total Requests</div>
-
-                        
-                        <div class="value">{{totalcount}}2</div>
                     </div>
                 </div>
             </div>
@@ -290,16 +173,17 @@
             <div class="transactions">
                 <!-- item -->
                 {{#each requests}}
-                        <a href="/request-detail" class="item">
+                        <a href="/acceptrequest" class="item">
                             <div class="detail">
                                 <img src="https://5.imimg.com/data5/XJ/JJ/MY-20797814/cardboard-carton-box-500x500.jpg" alt="img" class="image-block imaged w48">
                                 <div>
                                     <strong>{{this.pname}}</strong>
-                                    <p>{{this.weight}} gm</p>
+                                    <p>{{this.author}}</p>
+                                    <p>{{this.height}} x {{this.width}} W : {{this.weight}} GM</p>
                                 </div>
                             </div>
                             <div class="right">
-                                <span>Qty</span><div class="price text-success">+1</div>
+                                <span>Mobile</span><div class="price text-success">{{this.mobile}}</div>
                             </div>
                         </a>
                 {{/each}}
