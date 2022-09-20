@@ -65,6 +65,6 @@ const indexRoutes = require('./routes/index');
 
 app.use('/', indexRoutes);
 
-const port = 2000;
+const port = process.env.PORT || 2000;
 app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(port, () => console.log(`App Server Started On PORT ${port}!`));
