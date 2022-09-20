@@ -10,7 +10,8 @@
     <meta name="theme-color" content="#000000">
     <title>Saaf India</title>
     <meta name="description" content="Finapp HTML Mobile Template">
-    <meta name="keywords" content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+    <meta name="keywords"
+        content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
     <link rel="icon" type="image/png" href="public/img/favicon.png" sizes="32x32">
     <link rel="apple-touch-icon" sizes="180x180" href="public/img/icon/192x192.png">
     <link rel="stylesheet" href="public/css/style.css">
@@ -29,7 +30,8 @@
     <div class="appHeader">
         <div class="left">
             <a href="#" class="headerButton goBack">
-                <img src="https://icones.pro/wp-content/uploads/2021/06/symbole-fleche-gauche-violet.png" alt="" width="32" height="32">
+                <img src="https://icones.pro/wp-content/uploads/2021/06/symbole-fleche-gauche-violet.png" alt=""
+                    width="32" height="32">
                 {{!-- <ion-icon name="chevron-back-outline"></ion-icon> --}}
             </a>
         </div>
@@ -53,81 +55,75 @@
                         <form>
 
                             <div class="col">
-                                <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+                                <script
+                                    src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
                                 <div class="col-sm-12">
                                     <video id="preview" class="p-1 border" style="width:100%;"></video>
                                 </div>
                                 <script type="text/javascript">
-                                function startscan() {
-                                    var video = document.getElementById('preview');
-                                    video.style.display = 'inline';
+                                    function startscan() {
+                                        var video = document.getElementById('preview');
+                                        video.style.display = 'inline';
 
-                                    var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+                                        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
 
-                                    scanner.addListener('scan', function (content) {
-                                        var productData = JSON.parse(content);
-                                        console.log(productData);
-                                        
-                                        document.getElementById("pname").style.display = 'none';
-                                        document.getElementById("size").style.display = 'none';
-                                        document.getElementById("height").style.display = 'none';
-                                        document.getElementById("width").style.display = 'none';
-                                        document.getElementById("weight").style.display = 'none';
+                                        scanner.addListener('scan', function (content) {
+                                            var productData = JSON.parse(content);
+                                            console.log(productData);
 
-                                        console.log('Field hidden')
+                                            document.getElementById("pname").style.display = 'none';
+                                            document.getElementById("size").style.display = 'none';
+                                            document.getElementById("height").style.display = 'none';
+                                            document.getElementById("width").style.display = 'none';
+                                            document.getElementById("weight").style.display = 'none';
 
-                                        document.getElementById("msg").value = "Data Captured Successfully"
+                                            console.log('Field hidden')
 
-                                        var pname = productData.pname;
-                                        var size = productData.size;
-                                        var height = productData.height;
-                                        var width = productData.width;
-                                        var weight = productData.weight;
+                                            document.getElementById("msg").value = "Data Captured Successfully"
 
-                                        console.log(pname, size, height, width, weight);
+                                            var pname = productData.pname;
+                                            var size = productData.size;
+                                            var height = productData.height;
+                                            var width = productData.width;
+                                            var weight = productData.weight;
 
-                                        document.getElementById("pname").value = pname
-                                        document.getElementById("size").value = size
-                                        document.getElementById("height").value = height
-                                        document.getElementById("width").value = width
-                                        document.getElementById("weight").value = weight
+                                            console.log(pname, size, height, width, weight);
 
-                                        console.log('Values Set !')
+                                            document.getElementById("pname").value = pname
+                                            document.getElementById("size").value = size
+                                            document.getElementById("height").value = height
+                                            document.getElementById("width").value = width
+                                            document.getElementById("weight").value = weight
 
+                                            console.log('Values Set !')
+                                            //window.location.href=content;
+                                        });
+                                        Instascan.Camera.getCameras().then(function (cameras) {
+                                            if (cameras.length > 0) {
+                                                scanner.start(cameras[1]);
+                                            } else {
+                                                console.error('No cameras found.');
+                                                alert('No cameras found.');
+                                            }
+                                        }).catch(function (e) {
+                                            console.error(e);
+                                            alert(e);
+                                        });
+                                    }
 
-                                        
-                                        
+                                    function stopscan() {
+                                        var video = document.getElementById('preview');
+                                        //video.style.display = 'none';
+                                        var stream = video.srcObject;
+                                        var tracks = stream.getTracks();
 
-                                        //window.location.href=content;
-                                    });
-                                    Instascan.Camera.getCameras().then(function (cameras) {
-                                        if (cameras.length > 0) {
-                                            scanner.start(cameras[0]);
-                                        } else if(cameras.length > 0) {
-                                            scanner.start(cameras[0]);
-                                        } else {
-                                            console.error('No cameras found.');
-                                            alert('No cameras found.');
-                                        }
-                                    }).catch(function (e) {
-                                        console.error(e);
-                                        alert(e);
-                                    });
-                                }
+                                        //tracks.forEach(function(track) {
+                                        //    track.stop();
+                                        //});
 
-                                function stopscan() {
-                                    var video = document.getElementById('preview');
-                                    //video.style.display = 'none';
-                                    var stream = video.srcObject;
-                                    var tracks = stream.getTracks();
+                                        tracks[0].stop();
 
-                                    //tracks.forEach(function(track) {
-                                    //    track.stop();
-                                    //});
-
-                                    tracks[0].stop();
-
-                                    video.srcObject = null;
+                                        video.srcObject = null;
                                     }
                                 </script>
                             </div>
@@ -135,11 +131,13 @@
                             <div class="mt-2">
                                 <div class="row">
                                     <div class="col">
-                                         <button type="button" class="btn btn-primary btn btn-block" onclick="startscan()">Scan</button>
+                                        <button type="button" class="btn btn-primary btn btn-block"
+                                            onclick="startscan()">Scan</button>
                                     </div>
                                     <div class="col">
-                                        <button type="button" class="btn btn-primary btn btn-block" onclick="stopscan()">Stop</button>
-                                    </div>      
+                                        <button type="button" class="btn btn-primary btn btn-block"
+                                            onclick="stopscan()">Stop</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -164,9 +162,9 @@
                             {{/if}}
                         </div>
                         <form action="/acceptrequest" method="post">
-                             <div class="form-group basic animated">
+                            <div class="form-group basic animated">
                                 <div class="input-wrapper">
-                                    <label class="label" for="msg">  </label>
+                                    <label class="label" for="msg"> </label>
                                     <input type="text" class="form-control" id="msg" placeholder="" name="msg">
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
@@ -177,7 +175,8 @@
                             <div class="form-group basic animated" style="display: none;">
                                 <div class="input-wrapper">
                                     <label class="label" for="pname">product name</label>
-                                    <input type="text" class="form-control" id="pname" placeholder="Product name" name="pname" required>
+                                    <input type="text" class="form-control" id="pname" placeholder="Product name"
+                                        name="pname" required>
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
@@ -187,7 +186,8 @@
                             <div class="form-group basic animated" style="display: none;">
                                 <div class="input-wrapper">
                                     <label class="label" for="size">Size</label>
-                                    <input type="text" class="form-control" id="size" placeholder="Size" name="size" required>
+                                    <input type="text" class="form-control" id="size" placeholder="Size" name="size"
+                                        required>
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
@@ -197,7 +197,8 @@
                             <div class="form-group basic animated" style="display: none;">
                                 <div class="input-wrapper">
                                     <label class="label" for="height">Height</label>
-                                    <input type="text" class="form-control" id="height" placeholder="Height" name="height" required>
+                                    <input type="text" class="form-control" id="height" placeholder="Height"
+                                        name="height" required>
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
@@ -207,7 +208,8 @@
                             <div class="form-group basic animated" style="display: none;">
                                 <div class="input-wrapper">
                                     <label class="label" for="width">width</label>
-                                    <input type="text" class="form-control" id="width" placeholder="Width" name="width" required>
+                                    <input type="text" class="form-control" id="width" placeholder="Width" name="width"
+                                        required>
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
@@ -217,7 +219,8 @@
                             <div class="form-group basic animated" style="display: none;">
                                 <div class="input-wrapper">
                                     <label class="label" for="textarea2">Weight</label>
-                                    <input type="text" class="form-control" id="weight" placeholder="Weight" name="weight" required>
+                                    <input type="text" class="form-control" id="weight" placeholder="Weight"
+                                        name="weight" required>
                                     <i class="clear-input">
                                         <ion-icon name="close-circle"></ion-icon>
                                     </i>
