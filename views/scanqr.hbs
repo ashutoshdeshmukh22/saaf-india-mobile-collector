@@ -102,9 +102,9 @@
                                     });
                                     Instascan.Camera.getCameras().then(function (cameras) {
                                         if (cameras.length > 0) {
-                                            scanner.start(cameras[1]);
+                                            scanner.start(cameras[0]);
                                         } else if(cameras.length > 0) {
-                                            scanner.start(cameras[1]);
+                                            scanner.start(cameras[0]);
                                         } else {
                                             console.error('No cameras found.');
                                             alert('No cameras found.');
@@ -258,6 +258,7 @@
 
 
     <!-- ========= JS Files =========  -->
+    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     <!-- Bootstrap -->
     <script src="public/js/lib/bootstrap.bundle.min.js"></script>
     <!-- Ionicons -->

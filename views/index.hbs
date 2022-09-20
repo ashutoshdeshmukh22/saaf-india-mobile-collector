@@ -150,7 +150,7 @@
             <div class="row mt-2">
                 <div class="col-6">
                     <div class="stat-box">
-                        <div class="title">Requests today</div>
+                        <div class="title">Requests Today</div>
                         <div class="value text-success">{{totalcount}}</div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                                 <img src="https://5.imimg.com/data5/XJ/JJ/MY-20797814/cardboard-carton-box-500x500.jpg" alt="img" class="image-block imaged w48">
                                 <div>
                                     <strong>{{this.pname}}</strong>
-                                    <p>{{this.author}}</p>
+                                    <p>{{this.author.username}}</p>
                                     <p>{{this.height}} x {{this.width}} W : {{this.weight}} GM</p>
                                 </div>
                             </div>
@@ -377,6 +377,7 @@
     </div>
     <!-- * App Sidebar -->
     <!-- ========= JS Files =========  -->
+    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     <!-- Bootstrap -->
     <script src="public/js/lib/bootstrap.bundle.min.js"></script>
     <!-- Ionicons -->

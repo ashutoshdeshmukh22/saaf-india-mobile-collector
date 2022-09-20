@@ -8,6 +8,10 @@ const passport = require('passport');
 const middleware = require('../middleware');
 const file = require('fs');
 const multer = require('multer');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(
+  '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'
+);
 
 // router.use(express.static(__dirname + '/public/'));
 router.use('/public', express.static('public'));
@@ -137,6 +141,22 @@ router.post('/acceptrequest', middleware.isLoggedIn, (req, res) => {
         allrequests[0].weight == req.body.weight
       ) {
         console.log('Request Matched');
+
+        const msg = {
+          to: allrequests[0].author.email, // Change to your recipient
+          from: 'pp0428281@gmail.com', // Change to your verified sender
+          subject: 'Saaf India - Request Accepted',
+          text: 'Saaf India - Request Accepted',
+          html: '<table><tr><td><center><img src="https://espumil.com.br/wp-content/uploads/2021/03/simbolo-reciclagem-1.png" alt=""height="300" width="400"></center></td></tr><tr><td><center><h1>Request Accepted</h1></center></td></tr></table>',
+        };
+        sgMail
+          .send(msg)
+          .then(() => {
+            console.log('Email sent');
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       } else {
         console.log('Request Not Matched');
       }

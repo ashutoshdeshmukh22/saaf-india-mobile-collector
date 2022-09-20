@@ -6,17 +6,17 @@ var requestSchema = mongoose.Schema({
   height: String,
   width: String,
   weight: String,
-  author: String,
+  // author: String,
   address: String,
   mobile: String,
-  // author: {
-  //   id: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'User',
-  //   },
-  //   username: String,
-  //   email: String,
-  // },
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    username: String,
+    email: String,
+  },
 });
 
 module.exports = mongoose.model('Request', requestSchema);
