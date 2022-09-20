@@ -129,9 +129,9 @@ router.post('/acceptrequest', middleware.isLoggedIn, (req, res) => {
       console.log('Error in find');
       console.log(err);
     } else {
-      res.render('index', {
-        requests: allrequests.reverse(),
-      });
+      // res.render('index', {
+      //   requests: allrequests.reverse(),
+      // });
       console.log(allrequests[0]);
       if (
         allrequests[0].pname == req.body.pname &&
@@ -141,7 +141,9 @@ router.post('/acceptrequest', middleware.isLoggedIn, (req, res) => {
         allrequests[0].weight == req.body.weight
       ) {
         console.log('Request Matched');
-
+        res.render('scanqr', {
+          message: 'Request Matched',
+        });
         const msg = {
           to: allrequests[0].author.email, // Change to your recipient
           from: 'pp0428281@gmail.com', // Change to your verified sender
